@@ -1,5 +1,5 @@
 import React from 'react'
-import ScroteNav from '../scrote/nav'
+import ScroteNav from '../scrote/components/nav'
 import HomeHeader from './header'
 
 export default function AdminHomepage() {
@@ -11,7 +11,7 @@ export default function AdminHomepage() {
 
                 <div style={{ display: 'flex' }}>
 
-                    <h2 style={{ color: 'white' }}>Softwaremongers Admin Dashboard</h2>
+                    <h2 style={{ color: 'white' }}>Softwaremongers Admin Dashboard :)</h2>
 
 
                 </div>
