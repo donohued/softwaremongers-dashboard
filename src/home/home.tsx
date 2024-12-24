@@ -1,5 +1,5 @@
 import React from 'react'
-import ScroteNav from '../scrote/nav'
+import ScroteNav from '../scrote/components/nav'
 import HomeHeader from './header'
 
 export default function AdminHomepage() {

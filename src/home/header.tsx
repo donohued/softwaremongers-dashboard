@@ -2,6 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function HomeHeader() {
+  const handleLogout = () => {
+    
+  };
   return (
     <header className='' style={{ display: 'flex', justifyContent: 'space-around', backgroundColor: '#282c34', padding: '8px' }}>
       <div style={{ flex: 20, display: 'flex', justifyContent: 'space-around', textDecoration: 'none' }}>
@@ -10,7 +13,7 @@ export default function HomeHeader() {
         <div><button style={{}} >SoftwareMongers.com</button></div>
       </div>
 
-      <div style={{ flex: 1 }}><button style={{ backgroundColor: '#fa3c52' }} className="logout-btn" id="logoutButton">Logout</button></div>
+      <div style={{ flex: 1 }}><button style={{ backgroundColor: '#fa3c52' }} className="logout-btn" id="logoutButton" onClick={handleLogout}>Logout</button></div>
     </header>
   )
 }

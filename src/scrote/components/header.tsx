@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function ScroteHeader() {
@@ -9,6 +8,7 @@ export default function ScroteHeader() {
                 <div><button style={{}} >SeriouslyNIX.com</button></div>
                 <div><button style={{}} >SoftwareMongers.com</button></div>
             </div>
+
 
             <div style={{ flex: 1 }}><button style={{backgroundColor:'#fa3c52'}} className="logout-btn" id="logoutButton">Logout</button></div>
         </header>

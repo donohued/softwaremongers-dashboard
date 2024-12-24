@@ -1,6 +1,5 @@
-import ScroteNav from "./nav";
-import ScroteHeader from "./header";
-import ScroteSubmissions from "./submissions";
+import ScroteNav from "./components/nav";
+import ScroteHeader from "./components/header";
 import "98.css";
 import { Outlet } from "react-router-dom";
 

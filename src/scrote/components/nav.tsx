@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import dancingguy from "../assets/alien_ani.gif";
+import dancingguy from "../../assets/alien_ani.gif";
 
 export default function ScroteNav() {
     return (

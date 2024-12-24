@@ -91,23 +91,7 @@ body {
     font-size: 16px;
     color: #666;
   }
-  .logout-btn {
-    display: block;
-    width: 100px;
-    margin-left: 20px;
-    padding: 4px;
-    text-align: center;
-    background: #dc3545;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    text-decoration: none;
-  }
-  .logout-btn:hover {
-    background: #c82333;
-  }
+  
   .submission-list {
     display: flex;
     flex-wrap: wrap;
@@ -128,4 +112,8 @@ body {
   }
   .submission-box.new {
     border-color: #007bff;
+  }
+
+  .user-form-data-box :hover {
+    cursor: pointer;
   }
