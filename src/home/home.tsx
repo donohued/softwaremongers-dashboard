@@ -11,7 +11,7 @@ export default function AdminHomepage() {
 
                 <div style={{ display: 'flex' }}>
 
-                    <h2 style={{ color: 'white' }}>Softwaremongers Admin Dashboard</h2>
+                    <h2 style={{ color: 'white' }}>Softwaremongers Admin Dashboard :)</h2>
 
 
                 </div>
