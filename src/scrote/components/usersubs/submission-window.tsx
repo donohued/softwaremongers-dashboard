@@ -17,7 +17,7 @@ export default function SubmissionWindowComponent({ setWindowState, table, id }:
     React.useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}` + '/submission/' + table + '/' + id,
+                const response = await fetch(`${import.meta.env.VITE_API_URL}` + '/scrote/submission/' + table + '/' + id,
                     {
                         method: 'GET',
                         credentials: 'include'
