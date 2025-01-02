@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { SubmissionTable } from "../types";
 import SubmissionWindowMainComponent from "../components/usersubs/sub-window-spec-data";
 import SubmissionPanelComponent from "../components/usersubs/submission-panel";
+import rotskull from "../../assets/rotatingskull.gif";
+import coolguy from "../../assets/alien.gif";
 
 export default function ScroteSubmissions() {
 
@@ -144,7 +146,7 @@ export default function ScroteSubmissions() {
                         
                         {singleTableData && Object.keys(singleTableData).length === 0 ? (
                             <div style={{ flex: 3, border: "1px solid black", marginLeft: "8px", padding:'6px' }} className="tree-view">
-                                <img src="/alien.gif" alt="No Data Available" />
+                                <img src={coolguy} alt="No Data Available" />
                             </div>
                         ) : (
                             <SubmissionPanelComponent data={singleTableData} />

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import dancingguy from "../../assets/alien_ani.gif";
 
 export default function ScroteNav() {
     return (
@@ -19,7 +20,7 @@ export default function ScroteNav() {
                     <div><Link to={"/scrote/email"}>Send Email</Link></div>
                     <div><Link to={"/scrote/observer"}>Scrote Observer</Link></div>
                     <hr />
-                    <img src="/alien_ani.gif" alt="bill murray" />
+                    <img src={dancingguy} alt="bill murray" />
                 </div>
             </div>
 
