@@ -6,6 +6,7 @@ import ScrotePage from './scrote/scrote-page'
 import { BrowserRouter, Route, Router, Routes } from 'react-router-dom'
 import AdminHomepage from './home/home'
 import Login from './home/login'
+import Register from './home/register'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<AdminHomepage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
           <Route path="scrote" element={<ScrotePage />}>
             <Route index element={<ScroteOverview />} />

@@ -1,19 +1,25 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 
 export default function HomeHeader() {
+  const navigate = useNavigate();
   const handleLogout = () => {
     
   };
   return (
-    <header className='' style={{ display: 'flex', justifyContent: 'space-around', backgroundColor: '#282c34', padding: '8px' }}>
-      <div style={{ flex: 20, display: 'flex', justifyContent: 'space-around', textDecoration: 'none' }}>
-        <div><Link to="/scrote"><button style={{}} >Scrote.Org</button></Link></div>
-        <div><button style={{}} >SeriouslyNIX.com</button></div>
-        <div><button style={{}} >SoftwareMongers.com</button></div>
+    <div className='title-bar' style={{ }}>
+      <div className="title-bar-text">SoftwareMongers</div>
+                    <div className="title-bar-controls">
+                        <select defaultValue={"Home"} style={{color: 'black', height: '20px', marginTop:'-2px'}} onChange={(e) => navigate(e.target.value)}>
+                            <option value={"/"}>Home</option>
+                            <option value={"/scrote"}>Scrote.org</option>
+                            <option value={"/"}>Softwaremongers.com</option>
+                            <option value={"/"}>SeriouslyNIX.com</option>
+                            <option value={"/"}>Orgorglorg.org</option>
+                        </select>
+                        <div style={{width: "50px"}}></div>
+                        <button aria-label="Close" style={{height:"16px"}}></button>
+                    </div>
       </div>
-
-      <div style={{ flex: 1 }}><button style={{ backgroundColor: '#fa3c52' }} className="logout-btn" id="logoutButton" onClick={handleLogout}>Logout</button></div>
-    </header>
   )
 }
