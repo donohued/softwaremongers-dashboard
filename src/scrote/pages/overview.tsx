@@ -44,7 +44,7 @@ export default function ScroteOverview() {
 
             <div className="window" >
                 <div className="title-bar">
-                    <div className="title-bar-text">Scrote Dashboard</div>
+                    <div className="title-bar-text">Scrote Stats Overview</div>
                     <div className="title-bar-controls">
                         <button aria-label="Minimize"></button>
                         <button aria-label="Maximize"></button>
@@ -52,8 +52,6 @@ export default function ScroteOverview() {
                     </div>
                 </div>
                 <div className="window-body">
-
-                    <h3>Scrote.org Site Overview</h3>
                     <div className="stats">
                         <div className="stat-box">
                             <div className="icon">👁️</div>
@@ -82,13 +80,6 @@ export default function ScroteOverview() {
                             <p>Total Visitors</p>
                         </div>
                     </div>
-
-                    <ul style={{ color: 'black' }}>
-                        Stuff to add to this page:
-                        <li>submissions that need attention</li>
-                        <li>set scrote as prefered dashboard</li>
-                    </ul>
-
 
                 </div>
             </div>

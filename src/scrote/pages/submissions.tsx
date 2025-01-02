@@ -3,11 +3,15 @@ import SubmissionCardComponent from "../components/usersubs/submission-card";
 import { useNavigate } from 'react-router-dom';
 import { SubmissionTable } from "../types";
 import SubmissionWindowMainComponent from "../components/usersubs/sub-window-spec-data";
+import SubmissionPanelComponent from "../components/usersubs/submission-panel";
 
 export default function ScroteSubmissions() {
 
     const navigate = useNavigate();
     const [windowState, setWindowState] = React.useState(false)
+    const [table, setTable] = React.useState("")
+    const [id, setId] = React.useState("")
+    const [selData, setSelData] = React.useState({})
 
     React.useEffect(() => {
         async function fetchData() {
@@ -37,6 +41,7 @@ export default function ScroteSubmissions() {
             form: "",
             id: "",
             date: "",
+            name: "",
             sender: "",
             status: 0,
             new: false,
@@ -44,20 +49,29 @@ export default function ScroteSubmissions() {
         }]
     );
 
-        const [submissionData1, setSubmissionData1] = React.useState(
-            {
-                table: "",
-                id: 0,
-                date: "",
-                sender: "",
-                subStatus: "",
-                sendStatus: "",
-                new: true,
-                specs: {
+
+    const fetchDataSpec = async (table: string, id: string) => {
+        try {
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/scrote/submission/${table}/${id}`, {
+            method: 'GET',
+            credentials: 'include',
+          });
+          const data = await response.json();
+          setSingleTableData(data);
+          console.log(data);
+        } catch (error) {
+          console.error('Error fetching submission data:', error);
+        }
+      };
     
-                }
-            }
-        );
+      React.useEffect(() => {
+        if (table === '' || id === '') {
+          return;
+        }
+        fetchDataSpec(table, id);
+      }, [table, id]);
+
+    const [singleTableData, setSingleTableData] = React.useState<any>([]);
 
 
     return (
@@ -117,37 +131,24 @@ export default function ScroteSubmissions() {
                                     table={submission.form}
                                     date={submission.date}
                                     ip={submission.sender}
-                                    excerpt={submission.excerpt}
+                                    name={submission.name}
                                     status={submission.status}
                                     id={submission.id}
-                                    showWindow={setWindowState}
-                                    canOpenWindow={!windowState}
+                                    selectData= {fetchDataSpec}
                                 />
                             ))}
 
                             <center>Load More</center>
                         </div>
-
-                        <div style={{ flex: 3, backgroundColor: "white", border: "1px solid black", marginLeft: "8px" }} className="tree-view">
-                            <div style={{ width: '100%' }} >
-                                <strong>{submissionData1.table}</strong>, ID: {submissionData1.id}<br />
-                                {submissionData1.date}
-                                <hr />
-                                Sender IP: {submissionData1.sender} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IP Status: OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button disabled>BAN IP</button>
-                                <hr />
+                        
+                        
+                        {singleTableData && Object.keys(singleTableData).length === 0 ? (
+                            <div style={{ flex: 3, border: "1px solid black", marginLeft: "8px", padding:'6px' }} className="tree-view">
+                                <img src="/alien.gif" alt="No Data Available" />
                             </div>
-
-
-                            <SubmissionWindowMainComponent data={submissionData1.specs as Record<string, string[]>} />
-
-
-                            <div style={{ width: '100%' }} >
-                                <hr />
-                                {//make the hide button say "Deny" if the status is a warning, and "Hide" if the status is OK
-                                }
-                                <button disabled>Approve</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button disabled>Deny</button>
-                            </div>
-                        </div>
+                        ) : (
+                            <SubmissionPanelComponent data={singleTableData} />
+                        )}
                     </div>
 
 
