@@ -16,7 +16,7 @@
   },
   "routes": [
     {
-      "route": "/assets/*",
+      "route": "/*/assets",
       "serve": "/assets"
     },
     {
