@@ -16,6 +16,10 @@
   },
   "routes": [
     {
+      "route": "/assets/*",
+      "serve": "/assets"
+    },
+    {
       "route": "/*",
       "rewrite": "/index.html"
     }
