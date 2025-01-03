@@ -12,7 +12,7 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter basename='/'>
         <Routes>
           <Route path="/" element={<AdminHomepage />} />
           <Route path="/login" element={<Login />} />
@@ -20,7 +20,7 @@ function App() {
 
           <Route path="scrote" element={<ScrotePage />}>
             <Route index element={<ScroteOverview />} />
-            <Route index path="overview" element={<ScroteOverview />} />
+            <Route path="overview" element={<ScroteOverview />} />
             <Route path="submissions" element={<ScroteSubmissions />} />
             <Route path="files" element={<ScroteSubmissions />} />
             <Route path="email" element={<ScroteSubmissions />} />
