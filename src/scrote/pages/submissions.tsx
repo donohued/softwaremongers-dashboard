@@ -1,27 +1,35 @@
 import React from "react";
 import SubmissionCardComponent from "../components/usersubs/submission-card";
 import { useNavigate } from 'react-router-dom';
-import { SubmissionTable } from "../types";
-import SubmissionWindowMainComponent from "../components/usersubs/sub-window-spec-data";
 import SubmissionPanelComponent from "../components/usersubs/submission-panel";
-import rotskull from "../../assets/rotatingskull.gif";
-import coolguy from "../../assets/alien.gif";
 
 export default function ScroteSubmissions() {
 
     const navigate = useNavigate();
-    const [windowState, setWindowState] = React.useState(false)
-    const [table, setTable] = React.useState("")
-    const [id, setId] = React.useState("")
-    const [selData, setSelData] = React.useState({})
+    const [singleTableData, setSingleTableData] = React.useState<any>([]);
+    const [loadLimit, setLoadLimit] = React.useState(25);
+    const [loadOffset, setLoadOffset] = React.useState(0);
+    const [tableFilters, setTableFilters] = React.useState<string[]>([
+        "album_comments",
+        "alien_contact_form",
+        "confessions",
+        "missing_persons_reports",
+        "old_scrote_feedback",
+        "prayer_requests",
+        "skidmarks"]);
+
+    const [tempFilters, setTempFilters] = React.useState<string[]>([...tableFilters]);
+
 
     React.useEffect(() => {
-        async function fetchData() {
+        const controller = new AbortController();
+        const fetchData = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}` + '/scrote/submissions',
+                const response = await fetch(`${import.meta.env.VITE_API_URL}` + '/scrote/submissions/' + loadLimit + '/' + loadOffset + '/' + tableFilters.join(','),
                     {
                         method: 'GET',
-                        credentials: 'include'
+                        credentials: 'include',
+                        signal: controller.signal
                     });
                 if (!response.ok) {
                     console.error('Error fetching submission data:', response.statusText);
@@ -29,15 +37,18 @@ export default function ScroteSubmissions() {
                     return;
                 }
                 const data = await response.json();
-                setSubmissionData(data);
+                setSubmissionData(prevData => [...prevData, ...data]);
             } catch (error) {
-                console.error('Error fetching submission data:', error);
+                if (error !== 'AbortError') {
+                    console.error('Error fetching submission data:', error);
+                }
             }
-        }
-
+        };
         fetchData();
-    }, []);
-
+        return () => {
+            controller.abort();
+        };
+    }, [loadOffset, tableFilters]);
     const [submissionData, setSubmissionData] = React.useState(
         [{
             form: "",
@@ -51,29 +62,35 @@ export default function ScroteSubmissions() {
         }]
     );
 
-
     const fetchDataSpec = async (table: string, id: string) => {
         try {
-          const response = await fetch(`${import.meta.env.VITE_API_URL}/scrote/submission/${table}/${id}`, {
-            method: 'GET',
-            credentials: 'include',
-          });
-          const data = await response.json();
-          setSingleTableData(data);
-          console.log(data);
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/scrote/submission/${table}/${id}`, {
+                method: 'GET',
+                credentials: 'include',
+            });
+            const data = await response.json();
+            setSingleTableData(data);
         } catch (error) {
-          console.error('Error fetching submission data:', error);
+            console.error('Error fetching submission data:', error);
         }
-      };
-    
-      React.useEffect(() => {
-        if (table === '' || id === '') {
-          return;
-        }
-        fetchDataSpec(table, id);
-      }, [table, id]);
+    };
 
-    const [singleTableData, setSingleTableData] = React.useState<any>([]);
+    function handleFilterChange(name: string, checked: boolean) {
+        setTempFilters(prevFilters => {
+            if (checked && !prevFilters.includes(name)) {
+                return [...prevFilters, name];
+            } else if (!checked && prevFilters.includes(name)) {
+                return prevFilters.filter(filter => filter !== name);
+            }
+            return prevFilters;
+        });
+    }
+
+    function UpdateApplyFilters() {
+        setTableFilters(tempFilters);
+        setSubmissionData([]);
+        setLoadOffset(0);
+    }
 
 
     return (
@@ -94,59 +111,71 @@ export default function ScroteSubmissions() {
                         <div style={{ flexWrap: "wrap", flex: 1, padding: "4px", color: 'black', textWrap: 'nowrap' }}>
                             <h4 style={{ margin: '0px', fontSize: '1.33em' }}>Filter:</h4>
 
-                            <input type="checkbox" id="showAll" placeholder="All" />
-                            <label htmlFor="showAll">Show All</label>
-                            <br />
-                            <input type="checkbox" id="albumComments" placeholder="AlbumComments" />
+                            <input type="checkbox" id="albumComments" placeholder="AlbumComments" defaultChecked onChange={(e) => handleFilterChange("album_comments", e.target.checked)} />
                             <label htmlFor="albumComments">Album Comments</label>
                             <br />
-                            <input type="checkbox" id="confessions" placeholder="Confessions" />
+                            <input type="checkbox" id="confessions" placeholder="Confessions" defaultChecked onChange={(e) => handleFilterChange("confessions", e.target.checked)} />
                             <label htmlFor="confessions">Confessions</label>
                             <br />
-                            <input type="checkbox" id="prayerRequests" placeholder="PrayerRequests" />
+                            <input type="checkbox" id="prayerRequests" placeholder="PrayerRequests" defaultChecked onChange={(e) => handleFilterChange("prayer_requests", e.target.checked)} />
                             <label htmlFor="prayerRequests">Prayer Requests</label>
                             <br />
-                            <input type="checkbox" id="missingPersonsReports" placeholder="MissingPersonsReports" />
+                            <input type="checkbox" id="missingPersonsReports" placeholder="MissingPersonsReports" defaultChecked onChange={(e) => handleFilterChange("missing_persons_reports", e.target.checked)} />
                             <label htmlFor="missingPersonsReports" >Missing Persons Reports</label>
                             <br />
-                            <input type="checkbox" id="skidmarks" placeholder="Skidmarks" />
+                            <input type="checkbox" id="skidmarks" placeholder="Skidmarks" defaultChecked onChange={(e) => handleFilterChange("skidmarks", e.target.checked)} />
                             <label htmlFor="skidmarks">Skidmarks</label>
                             <br />
-                            <input type="checkbox" id="oldScroteFeedback" placeholder="OldScroteFeedback" />
+                            <input type="checkbox" id="oldScroteFeedback" placeholder="OldScroteFeedback" defaultChecked onChange={(e) => handleFilterChange("old_scrote_feedback", e.target.checked)} />
                             <label htmlFor="oldScroteFeedback">Old Scrote Feedback</label>
                             <br />
-                            <input type="checkbox" id="alienContactForm" name="AlienContactForm" placeholder="AlienContactForm" />
+                            <input type="checkbox" id="alienContactForm" name="AlienContactForm" placeholder="AlienContactForm" defaultChecked onChange={(e) => handleFilterChange("alien_contact_form", e.target.checked)} />
                             <label htmlFor="alienContactForm">Alien Contact Form</label>
                             <br />
+                            <label htmlFor="loadLimit">Load Limit:</label>
+                            <select id="loadLimit" value={loadLimit} onChange={(e) => setLoadLimit(Number(e.target.value))} disabled>
+                                <option value={25}>25</option>
+                                <option value={100}>100</option>
+                                <option value={500}>500</option>
+                            </select>
+                            <div style={{ textAlign: 'right', padding: '8px' }}>
+                                <button onClick={UpdateApplyFilters}>Apply</button>
+                            </div>
                         </div>
 
-                        <div style={{ flex: 5, border: "1px solid black" }} className="tree-view">
-                            <div style={{ width: "100%", backgroundColor: "white", display: 'flex' }}>
-                                <div style={{ flex: 5, paddingLeft: "4px", borderRight: "1px solid black" }}>Table</div>
-                                <div style={{ flex: 4, paddingLeft: "4px", borderRight: "1px solid black" }}>Date</div>
-                                <div style={{ flex: 6, paddingLeft: "4px" }}>Name</div>
+                        <div style={{ flex: 5 }} className="tree-view">
+                            <div style={{ border: "1px solid black", borderBottom: "0px" }}>
+                                <div style={{ width: "100%", backgroundColor: "white", display: 'flex' }}>
+                                    <div style={{ flex: 5, paddingLeft: "4px", borderRight: "1px solid black" }}>Table</div>
+                                    <div style={{ flex: 4, paddingLeft: "4px", borderRight: "1px solid black" }}>Date</div>
+                                    <div style={{ flex: 6, paddingLeft: "4px" }}>Name</div>
+                                </div>
+
+                                {submissionData.map((submission, index) => (
+                                    <SubmissionCardComponent
+                                        key={index}
+                                        table={submission.form}
+                                        date={submission.date}
+                                        ip={submission.sender}
+                                        name={submission.name}
+                                        status={submission.status}
+                                        id={submission.id}
+                                        selectData={fetchDataSpec}
+                                    />
+                                ))}
                             </div>
 
-                            {submissionData.slice(0, 25).map((submission, index) => (
-                                <SubmissionCardComponent
-                                    key={index}
-                                    table={submission.form}
-                                    date={submission.date}
-                                    ip={submission.sender}
-                                    name={submission.name}
-                                    status={submission.status}
-                                    id={submission.id}
-                                    selectData= {fetchDataSpec}
-                                />
-                            ))}
-
-                            <center>Load More</center>
+                            <center><span style={{ cursor: "pointer" }} onClick={() => setLoadOffset(loadOffset + loadLimit)}>Load More</span></center>
                         </div>
-                        
-                        
+
+
+
                         {singleTableData && Object.keys(singleTableData).length === 0 ? (
-                            <div style={{ flex: 3, border: "1px solid black", marginLeft: "8px", padding:'6px' }} className="tree-view">
-                                <img src="./alien.gif" alt="No Data Available" />
+                            <div style={{ flex: 3, }} className="tree-view">
+                                <div style={{border: "1px solid black", marginLeft: "8px", padding: '6px'}}>
+                                    <img src="./alien.gif" alt="No Data Available" />
+                                </div>
+                                
                             </div>
                         ) : (
                             <SubmissionPanelComponent data={singleTableData} />
