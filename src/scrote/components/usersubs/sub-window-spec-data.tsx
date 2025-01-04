@@ -5,8 +5,6 @@ type SubmissionWindowMainProps = {
 }
 
 export default function SubmissionWindowMainComponent({ data }: SubmissionWindowMainProps) {
-
-    console.log(data);
     return (
         <div style={{ width: "100%" }}>
             {Object.entries(data).map(([key, value]) => (
