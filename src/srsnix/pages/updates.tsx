@@ -92,7 +92,7 @@ export default function SeriouslyUpdates() {
             style={{ marginLeft: '10px', width: '100%', height: '200px' }}
             ref={textareaRef}
           ></textarea>
-          <div style={{textAlign:'right', color:'rgb(138, 138, 138)'}}>{bodyCharCount} characters</div>
+          <div style={{ textAlign: 'right', color: 'rgb(138, 138, 138)' }}>{bodyCharCount} characters</div>
         </div>
         <div style={{ marginBottom: '12px' }}>
           <label htmlFor="postDate">Post Date:</label>
