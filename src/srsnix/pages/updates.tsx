@@ -50,7 +50,7 @@ export default function SeriouslyUpdates() {
     formData.append('body', body);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/nix/updates`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/nix/postsiteupdate`, {
         method: 'POST',
         credentials: 'include',
         body: formData,
