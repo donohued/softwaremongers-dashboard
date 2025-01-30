@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../scrote-style.css'
+//import '../scrote-style.css'
 
 export default function ScroteOverview() {
     const navigate = useNavigate();
