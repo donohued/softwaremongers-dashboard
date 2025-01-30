@@ -1,0 +1,8 @@
+:root{
+  background-image: url('https://seriouslynix.com/images/starry.gif');
+  background-repeat: repeat;
+}
+input[type="text"], input[type="password"], input[type="email"], textarea {
+  color: black;
+  background-color: white;
+}
