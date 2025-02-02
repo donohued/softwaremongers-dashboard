@@ -3,10 +3,12 @@ import React, { useRef, useState } from 'react';
 export default function SeriouslyUpdates() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [postDate, setPostDate] = useState('');
+  const [title, setTitle] = useState('');
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const [body, setBody] = useState('');
   const [bodyCharCount, setBodyCharCount] = useState(0);
+  const [files, setFiles] = useState<File[]>([]);
 
   const insertAtCursor = (text: string) => {
     if (textareaRef.current) {
@@ -33,6 +35,11 @@ export default function SeriouslyUpdates() {
     }
   };
 
+  const handleFilesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = event.target.files ? Array.from(event.target.files) : [];
+    setFiles(selectedFiles);
+  };
+
   const handleBodyChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = event.target.value;
     setBody(value);
@@ -44,12 +51,27 @@ export default function SeriouslyUpdates() {
 
     const formData = new FormData();
     formData.append('postDate', postDate);
+    formData.append('title', title);
+    formData.append('body', body);
     if (thumbnail) {
       formData.append('thumbnail', thumbnail);
     }
-    formData.append('body', body);
+    files.forEach((file, index) => {
+      formData.append(`files`, file);
+    });
+
+    // Enhanced logging to inspect FormData entries
+    console.log('FormData entries:');
+    formData.forEach((value, key) => {
+      if (value instanceof File) {
+        console.log(`${key}: ${value.name} (File)`);
+      } else {
+        console.log(`${key}: ${value}`);
+      }
+    });
 
     try {
+      console.log('formData:', formData);
       const response = await fetch(`${import.meta.env.VITE_API_URL}/nix/postsiteupdate`, {
         method: 'POST',
         credentials: 'include',
@@ -72,6 +94,54 @@ export default function SeriouslyUpdates() {
       <p style={{ fontSize: '1.25rem' }}>Post an Update</p>
 
       <form onSubmit={handleSubmit}>
+      <div style={{ marginBottom: '12px', display: 'inline-block', width: '50%' }}>
+          <label htmlFor="thumbnail">Upload Thumbnail:</label>
+          <input
+            type="file"
+            id="thumbnail"
+            name="thumbnail"
+            onChange={handleThumbnailChange}
+            style={{ marginLeft: '10px' }}
+            required
+          />
+          {thumbnailPreview && (
+            <div style={{ marginTop: '10px' }}>
+              <img 
+              src={thumbnailPreview} 
+              alt="Thumbnail Preview" 
+              style={{ width: '100px', height: '100px', marginRight: '4px' }} 
+              />
+            </div>
+          )}
+        </div>
+
+        <div style={{display:'inline-block', verticalAlign:'top', width:'50%'}}>
+          <div style={{ marginBottom: '12px' }}>
+            <label htmlFor="title">Post Title:</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              style={{ marginLeft: '10px' }}
+              required
+            />
+          </div>
+          <div style={{ marginBottom: '12px' }}>
+            <label htmlFor="postDate">Post Date:</label>
+            <input
+              type="date"
+              id="postDate"
+              name="postDate"
+              value={postDate}
+              onChange={(e) => setPostDate(e.target.value)}
+              style={{ marginLeft: '10px' }}
+              required
+            />
+          </div>
+        </div>
+
         <div style={{ marginBottom: '12px' }}>
           <div style={{ marginBottom: '12px' }}>
             <button type="button" onClick={() => insertAtCursor('**bold**')} style={{ marginRight: '5px' }}>Bold</button>
@@ -91,33 +161,28 @@ export default function SeriouslyUpdates() {
             onChange={handleBodyChange}
             style={{ marginLeft: '10px', width: '100%', height: '200px' }}
             ref={textareaRef}
+            required
           ></textarea>
           <div style={{ textAlign: 'right', color: 'rgb(138, 138, 138)' }}>{bodyCharCount} characters</div>
         </div>
+
         <div style={{ marginBottom: '12px' }}>
-          <label htmlFor="postDate">Post Date:</label>
-          <input
-            type="date"
-            id="postDate"
-            name="postDate"
-            value={postDate}
-            onChange={(e) => setPostDate(e.target.value)}
-            style={{ marginLeft: '10px' }}
-          />
-        </div>
-        <div style={{ marginBottom: '12px' }}>
-          <label htmlFor="thumbnail">Upload Thumbnail:</label>
+          <label htmlFor="files">Upload Files (max 20):</label>
           <input
             type="file"
-            id="thumbnail"
-            name="thumbnail"
-            onChange={handleThumbnailChange}
+            id="files"
+            name="files"
+            multiple
+            onChange={handleFilesChange}
             style={{ marginLeft: '10px' }}
+            accept="image/*,video/*,application/pdf" // Optional: restrict file types
           />
-          {thumbnailPreview && (
-            <div style={{ marginTop: '10px' }}>
-              <img src={thumbnailPreview} alt="Thumbnail Preview" style={{ maxWidth: '100%', height: 'auto' }} />
-            </div>
+          {files.length > 0 && (
+            <ul style={{ marginTop: '10px', textAlign: 'left' }}>
+              {files.map((file, index) => (
+          <li key={index}>{file.name}</li>
+              ))}
+            </ul>
           )}
         </div>
         <button type="submit" style={{ marginTop: '12px' }}>Submit</button>
