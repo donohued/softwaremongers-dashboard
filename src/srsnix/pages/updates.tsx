@@ -187,6 +187,8 @@ export default function SeriouslyUpdates() {
         </div>
         <button type="submit" style={{ marginTop: '12px' }}>Submit</button>
       </form>
+
+      todo: add preview page, better multi-file uploading
     </div>
   );
 }

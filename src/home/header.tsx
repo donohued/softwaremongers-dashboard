@@ -11,6 +11,7 @@ export default function HomeHeader() {
       <div className="title-bar-text">SoftwareMongers</div>
                     <div className="title-bar-controls">
                         <select defaultValue={"Home"} style={{color: 'black', height: '20px', marginTop:'-2px'}} onChange={(e) => navigate(e.target.value)}>
+                            <option value={"/"}></option>
                             <option value={"/"}>Home</option>
                             <option value={"/scrote"}>Scrote.org</option>
                             <option value={"/srsnix"}>SeriouslyNIX.com</option>

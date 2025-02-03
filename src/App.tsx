@@ -10,6 +10,7 @@ import { ThemeProvider, useTheme } from './ThemeContext';
 import ScrotePage from './scrote/scrote-page';
 import ScroteOverview from './scrote/pages/overview';
 import ScroteSubmissions from './scrote/pages/submissions';
+import SeriouslyPolls from './srsnix/pages/polls';
 
 function App() {
   const { theme } = useTheme();
@@ -55,7 +56,7 @@ function App() {
         <Route path="srsnix" element={<SeriouslyNixPage />}>
           <Route path="overview" element={<SeriouslyOverview />} />
           <Route path="updates" element={<SeriouslyUpdates />} />
-          <Route path="polls" element={<SeriouslyUpdates />} />
+          <Route path="polls" element={<SeriouslyPolls />} />
           <Route path="files" element={<SeriouslyUpdates />} />
           <Route path="harold" element={<SeriouslyUpdates />} />
           <Route path="ip" element={<SeriouslyUpdates />} />
