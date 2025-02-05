@@ -109,3 +109,37 @@ body {
   .user-form-data-box :hover {
     cursor: pointer;
   }
+
+  .login-container {
+  max-width: 300px;
+  padding: 20px;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+.form-group input {
+  width: 100%;
+  color: black;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.form-group button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.form-group button:hover {
+  background-color: #0056b3;
+}
+.error {
+  color: rgb(179, 13, 13);
+  margin-top: 10px;
+}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Poll {
   date: string;
@@ -7,6 +8,8 @@ interface Poll {
 }
 
 export default function SeriouslyPolls() {
+  const navigate = useNavigate();
+
   const [polls, setPolls] = useState<Poll[]>([]);
   const [date, setDate] = useState('');
   const [question, setQuestion] = useState('');
@@ -17,6 +20,10 @@ export default function SeriouslyPolls() {
       try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/nix/getpolltopics`);
         const data = await response.json();
+        if (response.status === 401) {
+          navigate('/login');
+          return;
+        }
         setPolls(data);
       } catch (error) {
         console.error('Error fetching poll topics:', error);

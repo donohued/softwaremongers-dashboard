@@ -16,8 +16,8 @@ export default function ScroteNav() {
                 <div className="window-body">
                     <div><Link to={"/scrote/overview"}>Site Overview</Link></div>
                     <div><Link to={"/scrote/submissions"}>Form Submissions</Link></div>
-                    <div><Link to={"/scrote/files"}>Manage Files</Link></div>
                     <div><Link to={"/scrote/email"}>Send Email</Link></div>
+                    <div><Link to={"/scrote/files"}>Manage Files</Link></div>
                     <div><Link to={"/scrote/observer"}>Scrote Observer</Link></div>
                     <hr />
                     <img src="./alien_ani.gif" alt="bill murray" />
