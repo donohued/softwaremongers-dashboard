@@ -52,7 +52,8 @@ function App() {
           <Route path="submissions" element={<ScroteSubmissions />} />
           <Route path="email" element={<ScroteEmail />} />
           <Route path="files" element={<ScroteSubmissions />} />
-          <Route path="observer" element={<ScroteObserver />} />
+          <Route path="observer" element={<ScroteSubmissions />} />
+          <Route path="observertest" element={<ScroteObserver />} />
         </Route>
 
         <Route path="srsnix" element={<SeriouslyNixPage />}>
