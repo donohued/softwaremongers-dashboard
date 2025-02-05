@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
 
+const preMadeAddresses = [
+    'webmonger@scrote.org',
+    'crabshadyfan@scrote.org',
+    'an_cornhole@scrote.org',
+    'billing@scrote.org',
+    'marketing@scrote.org',
+    'sfmi@scrote.org',
+    'skit-zoh@scrote.org',
+    // Move to text file at some point
+];
+
 export default function ScroteEmail() {
     const [selectedAddress, setSelectedAddress] = useState(preMadeAddresses[0]);
     const [subject, setSubject] = useState('');
