@@ -24,7 +24,9 @@ export default function Login() {
 
       const data = await response.json();
       if (response.ok) {
-        navigate('/scrote');
+        // Change to last visited page
+        const lastVisitedPage = localStorage.getItem('lastVisitedPage') || '/home';
+        navigate(lastVisitedPage);
       } else {
         setError(data.message || 'Login failed');
       }

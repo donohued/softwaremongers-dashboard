@@ -11,14 +11,14 @@ export default function AdminHomepage() {
             url: 'https://scrote.org',
             dash: 'scrote',
             devUrl: 'https://gentle-sky-08a050f10-40.centralus.3.azurestaticapps.net/',
-            imgUrl: 'https://i.imgur.com/2zvR1Z4.jpg'
+            imgUrl: '/public/scrotethumbnail.JPG'
         },
         page2: {
             title: 'Seriouslynix.com',
-            url: 'https://seriouslynix.com.com/page1',
+            url: 'https://seriouslynix.com',
             dash: 'srsnix',
             devUrl: 'https://nice-pebble-063bfc510-10.centralus.3.azurestaticapps.net/home',
-            imgUrl: 'https://i.imgur.com/2zvR1Z4.jpg'
+            imgUrl: '/public/srsnixthumbnail.JPG'
         }
     }
 
@@ -33,11 +33,11 @@ export default function AdminHomepage() {
                 {Object.values(mainPages).map((page, index) => (
                         <div key={index} style={{ flex: '1' }}>
                             <div style={{ width: '80%', margin: 'auto' }}>
-                                <Link to={page.dash}>
-                                    <img style={{ width: '100%', margin: 'auto' }} src={page.imgUrl} alt={page.title} />
+                                <Link to={page.url}>
+                                    <img style={{ width: '100%', margin: 'auto', aspectRatio: '2/1', border:'1px solid black' }} src={page.imgUrl} alt={page.title} />
                                 </Link>
                                 <h3 style={{ textAlign: 'center', color: 'black', margin:0}}>
-                                    <a href={page.url} style={{ color: 'black', textDecoration: 'none' }}>{page.title}</a>
+                                    <a href={page.dash} style={{ color: 'black', textDecoration: 'none' }}>{page.title}: [Dash]</a>
                                 </h3>
                                 <p style={{ textAlign: 'center' }}>
                                     <a href={page.devUrl} style={{ color: 'black' }}>[dev site]</a>

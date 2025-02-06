@@ -18,7 +18,9 @@ export default function SeriouslyPolls() {
   useEffect(() => {
     const fetchPolls = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/nix/getpolltopics`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/nix/getpolltopics`, {
+          credentials: 'include'
+        });
         const data = await response.json();
         setPolls(data);
       } catch (error) {
@@ -51,6 +53,7 @@ export default function SeriouslyPolls() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newPoll),
+        credentials: 'include',
       });
 
       if (!response.ok) {
@@ -127,19 +130,23 @@ export default function SeriouslyPolls() {
 
 <h3 style={{ marginBottom: '12px', textAlign: 'center' }}>Current and Upcoming Polls</h3>
 
-      <ul>
-        {polls.map((poll, index) => (
-          <li key={index}>
-            <h4 style={{margin:'0px'}}>{poll.question}</h4>
-            <p>Date: {poll.date}</p>
-            <ul>
-              {poll.options.map((option, idx) => (
-                <li key={idx}>{option}</li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
+      {polls.length > 0 ? (
+        <ul>
+          {polls.map((poll, index) => (
+        <li key={index}>
+          <h4 style={{margin:'0px'}}>{poll.question}</h4>
+          <p>Date: {poll.date}</p>
+          <ul>
+            {poll.options.map((option, idx) => (
+          <li key={idx}>{option}</li>
+            ))}
+          </ul>
+        </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No polls available.</p>
+      )}
 
         todo: add update ability, redesign, indicate current and previous polls
     </div>
