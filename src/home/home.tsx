@@ -1,6 +1,7 @@
 import React from 'react'
 import ScroteNav from '../scrote/components/nav'
 import HomeHeader from './header'
+import { Link } from 'react-router-dom'
 
 export default function AdminHomepage() {
 
@@ -8,12 +9,14 @@ export default function AdminHomepage() {
         page1: {
             title: 'Scrote.org',
             url: 'https://scrote.org',
+            dash: 'scrote',
             devUrl: 'https://gentle-sky-08a050f10-40.centralus.3.azurestaticapps.net/',
             imgUrl: 'https://i.imgur.com/2zvR1Z4.jpg'
         },
         page2: {
             title: 'Seriouslynix.com',
             url: 'https://seriouslynix.com.com/page1',
+            dash: 'srsnix',
             devUrl: 'https://nice-pebble-063bfc510-10.centralus.3.azurestaticapps.net/home',
             imgUrl: 'https://i.imgur.com/2zvR1Z4.jpg'
         }
@@ -30,9 +33,9 @@ export default function AdminHomepage() {
                 {Object.values(mainPages).map((page, index) => (
                         <div key={index} style={{ flex: '1' }}>
                             <div style={{ width: '80%', margin: 'auto' }}>
-                                <a href={page.url}>
+                                <Link to={page.dash}>
                                     <img style={{ width: '100%', margin: 'auto' }} src={page.imgUrl} alt={page.title} />
-                                </a>
+                                </Link>
                                 <h3 style={{ textAlign: 'center', color: 'black', margin:0}}>
                                     <a href={page.url} style={{ color: 'black', textDecoration: 'none' }}>{page.title}</a>
                                 </h3>

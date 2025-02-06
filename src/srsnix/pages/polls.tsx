@@ -20,10 +20,6 @@ export default function SeriouslyPolls() {
       try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/nix/getpolltopics`);
         const data = await response.json();
-        if (response.status === 401) {
-          navigate('/login');
-          return;
-        }
         setPolls(data);
       } catch (error) {
         console.error('Error fetching poll topics:', error);
