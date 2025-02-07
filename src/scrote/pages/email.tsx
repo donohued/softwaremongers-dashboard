@@ -31,6 +31,7 @@ export default function ScroteEmail() {
             alert(JSON.stringify(emailData));
             const response = await fetch(`${import.meta.env.VITE_API_URL}/scrote/sendmail`, {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -62,7 +63,7 @@ export default function ScroteEmail() {
                 <div className="window-body">
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
-                            <label htmlFor="email" style={{display: 'inline-block'}} >Select Address:</label>
+                            <label htmlFor="email" style={{ display: 'inline-block' }} >Select Address:</label>
                             <select
                                 id="email"
                                 value={selectedAddress}
