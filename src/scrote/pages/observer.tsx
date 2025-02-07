@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-export default function SeriouslyUpdates() {
+export default function ScroteObserver() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [postDate, setPostDate] = useState('');
   const [title, setTitle] = useState('');
@@ -60,19 +60,8 @@ export default function SeriouslyUpdates() {
       formData.append(`files`, file);
     });
 
-    // Enhanced logging to inspect FormData entries
-    console.log('FormData entries:');
-    formData.forEach((value, key) => {
-      if (value instanceof File) {
-        console.log(`${key}: ${value.name} (File)`);
-      } else {
-        console.log(`${key}: ${value}`);
-      }
-    });
-
     try {
-      console.log('formData:', formData);
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/nix/postsiteupdate`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/scrote/poststory`, {
         method: 'POST',
         credentials: 'include',
         body: formData,
@@ -90,11 +79,22 @@ export default function SeriouslyUpdates() {
   };
 
   return (
-    <div style={{ width: '50%', margin: '12px auto', justifyContent: 'center', textAlign: 'center', color: 'white' }}>
-      <p style={{ fontSize: '1.25rem' }}>Post an Update</p>
+    <main style={{ flex: 5, padding: '1rem' }}>
+            <div className="window">
+                <div className="title-bar">
+                    <div className="title-bar-text">Send Email</div>
+                    <div className="title-bar-controls">
+                        <button aria-label="Minimize"></button>
+                        <button aria-label="Maximize"></button>
+                        <button aria-label="Close"></button>
+                    </div>
+                </div>
+    <div className="window-body">
+      <div style={{ width: '50%', margin: '12px auto', justifyContent: 'center', textAlign: 'center', color: 'white' }}>
+      <p style={{ fontSize: '1.25rem' }}>Post a Story</p>
 
       <form onSubmit={handleSubmit}>
-      <div style={{ marginBottom: '12px', display: 'inline-block', width: '50%' }}>
+        <div style={{ marginBottom: '12px', display: 'inline-block', width: '50%' }}>
           <label htmlFor="thumbnail">Upload Thumbnail:</label>
           <input
             type="file"
@@ -107,9 +107,9 @@ export default function SeriouslyUpdates() {
           {thumbnailPreview && (
             <div style={{ marginTop: '10px' }}>
               <img 
-              src={thumbnailPreview} 
-              alt="Thumbnail Preview" 
-              style={{ width: '100px', height: '100px', marginRight: '4px' }} 
+                src={thumbnailPreview} 
+                alt="Thumbnail Preview" 
+                style={{ width: '100px', height: '100px', marginRight: '4px' }} 
               />
             </div>
           )}
@@ -117,7 +117,7 @@ export default function SeriouslyUpdates() {
 
         <div style={{display:'inline-block', verticalAlign:'top', width:'50%'}}>
           <div style={{ marginBottom: '12px' }}>
-            <label htmlFor="title">Post Title:</label>
+            <label htmlFor="title">Story Title:</label>
             <input
               type="text"
               id="title"
@@ -180,15 +180,16 @@ export default function SeriouslyUpdates() {
           {files.length > 0 && (
             <ul style={{ marginTop: '10px', textAlign: 'left' }}>
               {files.map((file, index) => (
-          <li key={index}>{file.name}</li>
+                <li key={index}>{file.name}</li>
               ))}
             </ul>
           )}
         </div>
         <button type="submit" style={{ marginTop: '12px' }}>Submit</button>
       </form>
-
-      todo: add preview page, better multi-file uploading
     </div>
+        </div>
+      </div>
+    </main>
   );
 }
