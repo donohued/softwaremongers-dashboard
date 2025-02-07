@@ -11,14 +11,14 @@ export default function AdminHomepage() {
             url: 'https://scrote.org',
             dash: 'scrote',
             devUrl: 'https://gentle-sky-08a050f10-40.centralus.3.azurestaticapps.net/',
-            imgUrl: './public/scrotethumbnail.JPG'
+            imgUrl: './scrotethumbnail.JPG'
         },
         page2: {
             title: 'Seriouslynix.com',
             url: 'https://seriouslynix.com',
             dash: 'srsnix',
             devUrl: 'https://nice-pebble-063bfc510-10.centralus.3.azurestaticapps.net/home',
-            imgUrl: './public/srsnixthumbnail.JPG'
+            imgUrl: './srsnixthumbnail.JPG'
         }
     }
 
