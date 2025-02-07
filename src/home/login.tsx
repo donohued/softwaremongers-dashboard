@@ -25,7 +25,7 @@ export default function Login() {
       const data = await response.json();
       if (response.ok) {
         // Change to last visited page
-        const lastVisitedPage = localStorage.getItem('lastVisitedPage') || '/home';
+        const lastVisitedPage = localStorage.getItem('lastVisitedPage') || '/';
         navigate(lastVisitedPage);
       } else {
         setError(data.message || 'Login failed');
