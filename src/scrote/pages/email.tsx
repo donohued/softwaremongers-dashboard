@@ -28,7 +28,6 @@ export default function ScroteEmail() {
         };
 
         try {
-            alert(JSON.stringify(emailData));
             const response = await fetch(`${import.meta.env.VITE_API_URL}/scrote/sendmail`, {
                 method: 'POST',
                 credentials: 'include',
@@ -117,6 +116,14 @@ export default function ScroteEmail() {
                     {status && <div style={{ marginTop: '10px', color: 'red' }}>{status}</div>}
                 </div>
             </div>
+            Todo: <br />
+            add inbox <br />
+            add contact book window <br />
+            add drafts <br />
+            add way to add attachments <br />
+            add way to add cc/bcc <br />
+            add way to add reply to <br />
+            add page for creating new addresses
         </main>
     );
 }
